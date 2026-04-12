@@ -1,0 +1,30 @@
+{
+  "title": "Geography basics",
+  "questions": [
+    {
+      "question": "What is the capital of France?",
+      "choices": ["London", "Paris", "Berlin", "Madrid"],
+      "correct_index": 1
+    },
+    {
+      "question": "Which is the longest river in South America?",
+      "choices": ["Amazon", "Paraná", "Orinoco", "Magdalena"],
+      "correct_index": 0
+    },
+    {
+      "question": "Which country has the most time zones (including territories)?",
+      "choices": ["Russia", "United States", "France", "China"],
+      "correct_index": 2
+    },
+    {
+      "question": "Mount Kilimanjaro is in which country?",
+      "choices": ["Kenya", "Ethiopia", "Tanzania", "Uganda"],
+      "correct_index": 2
+    },
+    {
+      "question": "What is the smallest country in the world by land area?",
+      "choices": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+      "correct_index": 1
+    }
+  ]
+}
