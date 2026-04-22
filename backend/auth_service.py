@@ -27,6 +27,7 @@ def signup(username, password):
         return False, f"Signup Failed: {e}"
     finally:
         session.close()
+
 def login(username, password):
     session = SessionLocal()
     try:
@@ -37,9 +38,10 @@ def login(username, password):
             return False, "Username and password cant be empty", None
         user = session.query(Users).filter_by(username=username).first()
         if not user:
-            return False, "Username does not exist"
+            return False, "Username does not exist", None
         if user.password != password:
-            return False, "Incorrect password"
+            return False, "Incorrect password", None
+
         return True,"Login Successful.", user
     except Exception as e:
         return False, f"Login Failed: {e}"
