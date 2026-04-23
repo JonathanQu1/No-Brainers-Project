@@ -36,7 +36,7 @@ Creates `data/app.db` and tables if needed.
 ### 4. Start the app
 
 ```bash
-python frontend/app.py
+python -m frontend.app
 ```
 
 Use the project root for these commands so `backend` imports work. If the folder path has spaces, quote it in `cd`.

@@ -41,10 +41,9 @@ def login(username, password):
             return False, "Username does not exist", None
         if user.password != password:
             return False, "Incorrect password", None
-
         return True,"Login Successful.", user
     except Exception as e:
-        return False, f"Login Failed: {e}"
+        return False, f"Login Failed: {e}", None
     finally:
         session.close()
 
