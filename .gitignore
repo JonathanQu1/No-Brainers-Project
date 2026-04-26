@@ -2,3 +2,9 @@ app.db
 backend/__pycache__/database.cpython-314.pyc
 backend/__pycache__/models.cpython-314.pyc
 backend/__pycache__/auth_service.cpython-314.pyc
+data/flashcards.csv
+frontend/__pycache__/app.cpython-314.pyc
+frontend/__pycache__/flashcard_view.cpython-314.pyc
+frontend/__pycache__/user_store.cpython-314.pyc
+frontend/__pycache__/quiz_view.cpython-314.pyc
+wheelspin.py
