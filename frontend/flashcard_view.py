@@ -102,35 +102,56 @@ class FlashcardPanel(ctk.CTkFrame):
             font=ctk.CTkFont(size=24, weight="bold"),
         ).pack(anchor="w", padx=20, pady=(18, 16))
 
+        menu_row = ctk.CTkFrame(select_set_frame, fg_color="transparent")
+        menu_row.pack(anchor="w", padx=20, pady=(0, 12))
+
         self.selected_set_var = ctk.StringVar(value="No sets yet")
         self.select_set_menu = ctk.CTkOptionMenu(
-            select_set_frame,
+            menu_row,
             values=["No sets yet"],
             variable=self.selected_set_var,
             width=300,
             command=lambda _choice: self._render_selected_set_cards(),
         )
-        self.select_set_menu.pack(anchor="w", padx=20, pady=(0, 12))
+        self.select_set_menu.pack(side="left")
 
         ctk.CTkButton(
-            select_set_frame,
-            text="Refresh Sets",
+            menu_row,
+            text="↻",
+            width=40,
+            height=30,
             fg_color=PRIMARY,
             command=self._refresh_set_menu,
-        ).pack(anchor="w", padx=20, pady=(0, 12))
+        ).pack(side="left", padx=(10, 0))
 
         ctk.CTkButton(
-            select_set_frame,
-            text="Delete Set",
-            fg_color="#DC2626",
-            hover_color="#B91C1C",
+            menu_row,
+            text="🗑️",
+            fg_color=("gray85", "gray25"),
+            hover_color=("gray75", "gray35"),
+            width=40,
+            height=30,
             command=self._delete_selected_set,
-        ).pack(anchor="w", padx=20, pady=(0, 12))
+        ).pack(side="left", padx=(10, 0))
 
-        self.set_cards_box = ctk.CTkTextbox(select_set_frame, width=650, height=260)
-        self.set_cards_box.pack(anchor="w", padx=20, pady=(0, 12))
-        self.set_cards_box.insert("1.0", "No set selected.")
-        self.set_cards_box.configure(state="disabled")
+        self.set_preview_name = ctk.CTkLabel(
+            select_set_frame,
+            text="",
+            text_color=TEXT_DARK,
+            font=ctk.CTkFont(size=18, weight="bold"),
+        )
+        self.set_preview_name.pack(anchor="w", padx=20, pady=(4, 6))
+
+        self.set_cards_scroll = ctk.CTkScrollableFrame(
+            select_set_frame,
+            width=650,
+            height=260,
+            fg_color="transparent",
+        )
+        self.set_cards_scroll.pack(
+            anchor="w", fill="both", expand=True, padx=20, pady=(0, 12)
+        )
+        self._show_set_preview_message("No set selected.")
 
         # Tab 3: quick study mode (flip through cards in a popup window).
         learn_mode_frame = notebook.add("Learn Mode")
@@ -159,7 +180,7 @@ class FlashcardPanel(ctk.CTkFrame):
 
         ctk.CTkButton(
             learn_mode_frame,
-            text="Load Set",
+            text="Start Learning",
             fg_color=PRIMARY,
             command=self._start_learn_mode,
         ).pack(anchor="w", padx=20, pady=(0, 14))
@@ -205,7 +226,7 @@ class FlashcardPanel(ctk.CTkFrame):
             self.selected_set_var.set("No sets yet")
             self.learn_set_menu.configure(values=["No sets yet"])
             self.learn_set_var.set("No sets yet")
-            self._update_set_cards_box("No sets yet. Add a card in Create Set.")
+            self._show_set_preview_message("No sets yet. Add a card in Create Set.")
             return
 
         # Keep both dropdowns aligned and pick a sensible selected set.
@@ -219,31 +240,92 @@ class FlashcardPanel(ctk.CTkFrame):
             self.learn_set_var.set(set_names[0])
         self._render_selected_set_cards()
 
+    def _clear_set_cards_scroll(self):
+        for child in self.set_cards_scroll.winfo_children():
+            child.destroy()
+
+    def _show_set_preview_message(self, message: str):
+        # Empty / info state: hide the set title and show a single message.
+        self.set_preview_name.configure(text="")
+        self._clear_set_cards_scroll()
+        ctk.CTkLabel(
+            self.set_cards_scroll,
+            text=message,
+            text_color="#64748B",
+            font=ctk.CTkFont(size=14),
+            wraplength=620,
+            justify="left",
+        ).pack(anchor="w", padx=4, pady=8)
+
     def _render_selected_set_cards(self):
-        # Show all cards from the currently selected set in the text preview box.
+        # Show set name plus a two-column Term | Definition list (no numbering).
         selected = self.selected_set_var.get().strip()
         if not selected or selected == "No sets yet":
-            self._update_set_cards_box("No set selected.")
+            self._show_set_preview_message("No set selected.")
             return
 
         cards = get_set_flashcards(self.username, selected)
+        self.set_preview_name.configure(text=selected)
+        self._clear_set_cards_scroll()
+
         if not cards:
-            self._update_set_cards_box("This set has no cards.")
+            ctk.CTkLabel(
+                self.set_cards_scroll,
+                text="This set has no cards.",
+                text_color="#64748B",
+                font=ctk.CTkFont(size=14),
+            ).pack(anchor="w", padx=4, pady=8)
             return
 
-        lines = [f"Set: {selected}", ""]
-        for i, card in enumerate(cards, start=1):
-            lines.append(f"{i}. Term: {card['term']}")
-            lines.append(f"   Definition: {card['definition']}")
-            lines.append("")
-        self._update_set_cards_box("\n".join(lines).strip())
+        header = ctk.CTkFrame(
+            self.set_cards_scroll, fg_color="#E2E8F0", corner_radius=8
+        )
+        header.pack(fill="x", pady=(0, 8))
+        header.grid_columnconfigure(0, weight=1, uniform="setpair")
+        header.grid_columnconfigure(1, weight=1, uniform="setpair")
 
-    def _update_set_cards_box(self, text):
-        # Textbox is read-only for users, so briefly enable it for updates.
-        self.set_cards_box.configure(state="normal")
-        self.set_cards_box.delete("1.0", "end")
-        self.set_cards_box.insert("1.0", text)
-        self.set_cards_box.configure(state="disabled")
+        ctk.CTkLabel(
+            header,
+            text="Term",
+            text_color=TEXT_DARK,
+            font=ctk.CTkFont(size=13, weight="bold"),
+        ).grid(row=0, column=0, sticky="w", padx=14, pady=10)
+        ctk.CTkLabel(
+            header,
+            text="Definition",
+            text_color=TEXT_DARK,
+            font=ctk.CTkFont(size=13, weight="bold"),
+        ).grid(row=0, column=1, sticky="w", padx=14, pady=10)
+
+        for card in cards:
+            row = ctk.CTkFrame(
+                self.set_cards_scroll, fg_color="#F8FAFC", corner_radius=8
+            )
+            row.pack(fill="x", pady=(0, 6))
+            row.grid_columnconfigure(0, weight=1, uniform="setpair")
+            row.grid_columnconfigure(1, weight=1, uniform="setpair")
+
+            term = (card.get("term") or "").strip()
+            definition = (card.get("definition") or "").strip()
+
+            ctk.CTkLabel(
+                row,
+                text=term,
+                text_color=TEXT_DARK,
+                font=ctk.CTkFont(size=14),
+                wraplength=300,
+                justify="left",
+                anchor="w",
+            ).grid(row=0, column=0, sticky="nw", padx=14, pady=10)
+            ctk.CTkLabel(
+                row,
+                text=definition,
+                text_color=TEXT_DARK,
+                font=ctk.CTkFont(size=14),
+                wraplength=300,
+                justify="left",
+                anchor="w",
+            ).grid(row=0, column=1, sticky="nw", padx=14, pady=10)
 
     def _delete_selected_set(self):
         # Delete currently selected set after user confirmation.
@@ -261,7 +343,7 @@ class FlashcardPanel(ctk.CTkFrame):
 
         delete_set(self.username, selected)
         self._refresh_set_menu()
-        self._update_set_cards_box("Set deleted.")
+        self._show_set_preview_message("Set deleted.")
 
     def _start_learn_mode(self):
         # Load cards for Learn Mode and open the study popup.

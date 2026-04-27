@@ -23,3 +23,29 @@ j,random_vocab,urgent,requiring immediate action,2026-04-25 18:33
 j,random_vocab,vivid,producing strong and clear images,2026-04-25 18:33
 j,random_vocab,withstand,to resist successfully,2026-04-25 18:33
 j,random_vocab,yield,to produce or provide,2026-04-25 18:33
+j,python_basics,list,A mutable ordered collection in Python,2026-04-26 12:00
+j,python_basics,tuple,An immutable ordered collection,2026-04-26 12:00
+j,python_basics,dict,A mapping of keys to values,2026-04-26 12:00
+j,python_basics,def,Keyword used to define a function,2026-04-26 12:00
+j,python_basics,import,Brings a module into your program,2026-04-26 12:00
+j,python_basics,PEP 8,Common style guide for Python code,2026-04-26 12:00
+j,world_capitals,France,Paris,2026-04-26 12:00
+j,world_capitals,Japan,Tokyo,2026-04-26 12:00
+j,world_capitals,Canada,Ottawa,2026-04-26 12:00
+j,world_capitals,Brazil,Brasilia,2026-04-26 12:00
+j,world_capitals,Australia,Canberra,2026-04-26 12:00
+j,world_capitals,Egypt,Cairo,2026-04-26 12:00
+j,algebra_flip,Slope,Rate of change of a line,2026-04-26 12:00
+j,algebra_flip,Quadratic,Polynomial of degree two,2026-04-26 12:00
+j,algebra_flip,FOIL,Method to multiply two binomials,2026-04-26 12:00
+j,algebra_flip,FOIL first step,Multiply First terms,2026-04-26 12:00
+j,algebra_flip,Intercepts,Where a graph crosses an axis,2026-04-26 12:00
+j,study_tips,Spaced practice,Review material over several sessions,2026-04-26 12:00
+j,study_tips,Active recall,Test yourself without looking at notes,2026-04-26 12:00
+j,study_tips,Pomodoro,Short focused work blocks with short breaks,2026-04-26 12:00
+j,study_tips,Sleep,Consolidates memory after learning,2026-04-26 12:00
+j,science_trivia,Photosynthesis,Plants use light to make sugar and oxygen,2026-04-26 12:00
+j,science_trivia,H2O,Two hydrogen atoms and one oxygen,2026-04-26 12:00
+j,science_trivia,DNA,Carries genetic instructions,2026-04-26 12:00
+j,science_trivia,Gravity,Attraction between masses,2026-04-26 12:00
+j,science_trivia,Atom,Smallest unit of a chemical element,2026-04-26 12:00

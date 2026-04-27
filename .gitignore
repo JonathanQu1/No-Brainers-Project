@@ -8,3 +8,5 @@ frontend/__pycache__/flashcard_view.cpython-314.pyc
 frontend/__pycache__/user_store.cpython-314.pyc
 frontend/__pycache__/quiz_view.cpython-314.pyc
 wheelspin.py
+data/flashcards.csv
+frontend/__pycache__/quiz_view.cpython-314.pyc
