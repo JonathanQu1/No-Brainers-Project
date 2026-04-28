@@ -4,13 +4,13 @@ from frontend.login_view import LoginView
 from frontend.quiz_view import QuizView
 
 ctk.set_appearance_mode("light")
-ctk.set_default_color_theme("dark-blue")
+ctk.set_default_color_theme("blue")
 
 
 def main():
     root = ctk.CTk()
     root.title("No Brainers")
-    root.geometry("900x600")
+    root.geometry("950x620")
 
     container = ctk.CTkFrame(root, fg_color="transparent")
     container.pack(fill="both", expand=True)
