@@ -1,12 +1,69 @@
+# ===== Sensitive / user data =====
+data/*.csv
+data/*.db
+data/*.json
+!data/*.example.csv
+!data/*.example.json
 app.db
-backend/__pycache__/database.cpython-314.pyc
-backend/__pycache__/models.cpython-314.pyc
-backend/__pycache__/auth_service.cpython-314.pyc
-data/flashcards.csv
-frontend/__pycache__/app.cpython-314.pyc
-frontend/__pycache__/flashcard_view.cpython-314.pyc
-frontend/__pycache__/user_store.cpython-314.pyc
-frontend/__pycache__/quiz_view.cpython-314.pyc
-wheelspin.py
-data/flashcards.csv
-frontend/__pycache__/quiz_view.cpython-314.pyc
+*.sqlite
+*.sqlite3
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ===== Virtual environments =====
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ===== Distribution / build =====
+build/
+dist/
+*.egg-info/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ===== Testing / coverage =====
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ===== IDE / editor =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== OS junk =====
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===== Cursor =====
+.cursor/
+
+# ===== Environment / secrets =====
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+config.local.*
+
+# ===== Logs =====
+*.log
+logs/
