@@ -9,12 +9,7 @@ FLASHCARDS_FILE = os.path.join("data", "flashcards.csv")
 
 def make_data_files():
     os.makedirs("data", exist_ok=True)
-
-    if not os.path.exists(USERS_FILE):
-        with open(USERS_FILE, "w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(["username", "password_hash"])
-
+    
     if not os.path.exists(SCORES_FILE):
         with open(SCORES_FILE, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
