@@ -3,7 +3,6 @@ import os
 import hashlib
 from datetime import datetime
 
-USERS_FILE = os.path.join("data", "users.csv")
 SCORES_FILE = os.path.join("data", "scores.csv")
 FLASHCARDS_FILE = os.path.join("data", "flashcards.csv")
 
@@ -25,49 +24,6 @@ def make_data_files():
         with open(FLASHCARDS_FILE, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerow(["username", "set_name", "term", "definition", "date"])
-
-
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
-
-def user_exists(username):
-    make_data_files()
-
-    with open(USERS_FILE, newline="", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row["username"] == username:
-                return True
-
-    return False
-
-
-def signup_user(username, password):
-    make_data_files()
-
-    if user_exists(username):
-        return False
-
-    with open(USERS_FILE, "a", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow([username, hash_password(password)])
-
-    return True
-
-
-def verify_user(username, password):
-    make_data_files()
-    password_hash = hash_password(password)
-
-    with open(USERS_FILE, newline="", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row["username"] == username and row["password_hash"] == password_hash:
-                return True
-
-    return False
-
 
 def save_score(username, score, total):
     make_data_files()

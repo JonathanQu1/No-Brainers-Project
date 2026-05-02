@@ -35,7 +35,8 @@ class LoginView(ctk.CTkFrame):
         self.login_card.pack_propagate(False)
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        logo_path = os.path.join(BASE_DIR, "logo.png")
+        PROJECT_ROOT = os.path.dirname(BASE_DIR)
+        logo_path = os.path.join(PROJECT_ROOT, "assets", "logo.png")
 
         self.logo_image = ctk.CTkImage(
             light_image=Image.open(logo_path),
