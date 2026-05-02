@@ -89,6 +89,53 @@ def get_last_score(username):
 
     return last_score
 
+def get_user_stats(username):
+    """Aggregate quiz history for a user.
+
+    Returns a dict with: attempts, total_correct, total_questions,
+    accuracy (float, 0-100), first_date (datetime or None).
+    """
+    make_data_files()
+
+    attempts = 0
+    total_correct = 0
+    total_questions = 0
+    first_date = None
+
+    with open(SCORES_FILE, newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row.get("username") != username:
+                continue
+
+            try:
+                score = int(row["score"])
+                total = int(row["total"])
+            except (ValueError, KeyError, TypeError):
+                continue
+
+            attempts += 1
+            total_correct += score
+            total_questions += total
+
+            date_str = (row.get("date") or "").strip()
+            if date_str:
+                try:
+                    parsed = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+                    if first_date is None or parsed < first_date:
+                        first_date = parsed
+                except ValueError:
+                    pass
+
+    accuracy = (total_correct / total_questions * 100) if total_questions else 0.0
+
+    return {
+        "attempts": attempts,
+        "total_correct": total_correct,
+        "total_questions": total_questions,
+        "accuracy": accuracy,
+        "first_date": first_date,
+    }
 
 def get_attempt_count(username):
     make_data_files()
