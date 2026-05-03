@@ -1,6 +1,11 @@
+import hashlib
+
 from backend.database import SessionLocal
 from backend.models import Users
 
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def signup(username, password):
     session = SessionLocal()
@@ -16,7 +21,9 @@ def signup(username, password):
         if existing_user:
             return False, "Username already exists"
 
-        new_user = Users(username=username, password=password)
+        hash = hash_password(password)
+
+        new_user = Users(username=username, password=hash)
         session.add(new_user)
         session.commit()
 
@@ -39,7 +46,7 @@ def login(username, password):
         user = session.query(Users).filter_by(username=username).first()
         if not user:
             return False, "Username does not exist", None
-        if user.password != password:
+        if user.password != hash_password(password):
             return False, "Incorrect password", None
         return True,"Login Successful.", user
     except Exception as e:
