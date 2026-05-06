@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 
-from frontend.user_store import (
+from backend.user_store import (
     delete_set,
     get_set_flashcards,
     get_set_names,

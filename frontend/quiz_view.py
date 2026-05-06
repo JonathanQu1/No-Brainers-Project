@@ -5,7 +5,7 @@ from tkinter import filedialog, messagebox
 
 from frontend.flashcard_view import FlashcardPanel
 from frontend.quiz import load_questions, parse_questions_csv
-from frontend.user_store import (
+from backend.user_store import (
     get_attempt_count,
     get_last_score,
     get_user_stats,
