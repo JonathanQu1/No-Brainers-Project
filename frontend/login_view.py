@@ -36,7 +36,7 @@ class LoginView(ctk.CTkFrame):
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         PROJECT_ROOT = os.path.dirname(BASE_DIR)
-        logo_path = os.path.join(PROJECT_ROOT, "assets", "logo.png")
+        logo_path = os.path.join(PROJECT_ROOT, "assets", "logo.PNG")
 
         self.logo_image = ctk.CTkImage(
             light_image=Image.open(logo_path),
